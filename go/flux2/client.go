@@ -1,0 +1,56 @@
+// Package flux2 provides the Flux 2 text-to-image API client.
+//
+//	client, err := flux_2.NewClient(option.WithAPIKey("sk-your-api-key"))
+//	result, err := client.TextToImage.Run(ctx, flux_2.TextToImageParams{
+//	    Model: "flux-2-pro-text-to-image", Prompt: "A beautiful landscape",
+//	})
+package flux2
+
+import (
+	"context"
+
+	"github.com/runapi-ai/core-sdk/go/core"
+	"github.com/runapi-ai/core-sdk/go/option"
+)
+
+const textToImagePath = "/api/v1/flux_2/text_to_image"
+
+// Client is the Flux 2 text-to-image API client.
+type Client struct {
+	// TextToImage provides text-to-image operations.
+	TextToImage *TextToImage
+}
+
+// NewClient creates a Flux 2 client with the given options.
+func NewClient(opts ...option.ClientOption) (*Client, error) {
+	resolved, err := option.ResolveClientOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	httpClient, err := core.NewHTTPClient(resolved)
+	if err != nil {
+		return nil, err
+	}
+	return NewClientWithHTTP(httpClient), nil
+}
+
+// NewClientWithHTTP creates a Flux 2 client with a pre-configured HTTP transport.
+func NewClientWithHTTP(httpClient core.HTTPClient) *Client {
+	return &Client{TextToImage: &TextToImage{http: httpClient}}
+}
+
+// TextToImage creates text-to-image tasks using Flux 2 models.
+type TextToImage struct{ http core.HTTPClient }
+
+func (r *TextToImage) Create(ctx context.Context, params TextToImageParams, opts ...option.RequestOption) (*core.TaskCreateResponse, error) {
+	requestOptions, _ := option.ResolveRequestOptions(opts...)
+	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, textToImagePath, core.CompactParams(params), requestOptions)
+}
+func (r *TextToImage) Get(ctx context.Context, id string, opts ...option.RequestOption) (*TextToImageResponse, error) {
+	requestOptions, _ := option.ResolveRequestOptions(opts...)
+	return core.GetJSON[TextToImageResponse](ctx, r.http, core.ResourcePath(textToImagePath, id), requestOptions)
+}
+func (r *TextToImage) Run(ctx context.Context, params TextToImageParams, opts ...option.RequestOption) (*TextToImageResponse, error) {
+	_, pollingOptions := option.ResolveRequestOptions(opts...)
+	return core.RunAsync(ctx, func(ctx context.Context) (*core.TaskCreateResponse, error) { return r.Create(ctx, params, opts...) }, func(ctx context.Context, id string) (*TextToImageResponse, error) { return r.Get(ctx, id, opts...) }, pollingOptions)
+}
