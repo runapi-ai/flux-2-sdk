@@ -1,4 +1,24 @@
-# Flux API SDK for RunAPI
+<p align="center">
+  <a href="https://runapi.ai"><img src="https://runapi.ai/icon.svg" height="56" alt="RunAPI"></a>
+</p>
+
+<h3 align="center">
+  <a href="https://github.com/runapi-ai/flux-2-sdk">Flux 2 API SDK for RunAPI</a>
+</h3>
+
+<p align="center">
+  Flux 2 API SDKs for JavaScript, Ruby, and Go on RunAPI.
+</p>
+
+<div align="center">
+
+[![npm](https://img.shields.io/npm/v/@runapi.ai/flux-2)](https://www.npmjs.com/package/@runapi.ai/flux-2)
+[![RubyGems](https://img.shields.io/gem/v/runapi-flux-2)](https://rubygems.org/gems/runapi-flux-2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/runapi-ai/flux-2-sdk/go.svg)](https://pkg.go.dev/github.com/runapi-ai/flux-2-sdk/go)
+[![License](https://img.shields.io/github/license/runapi-ai/flux-2-sdk)](https://github.com/runapi-ai/flux-2-sdk/blob/main/LICENSE)
+
+</div>
+<br/>
 
 The flux api SDK packages JavaScript, Ruby, and Go clients for Flux 2 on RunAPI. Use this flux api SDK for text-to-image, image-to-image, edit, and creative production workflows that need typed installs, JSON request bodies, task polling, and consistent RunAPI errors across services.
 
@@ -8,7 +28,7 @@ Flux 2 belongs to the Black Forest Labs catalog on RunAPI. The public model page
 
 ```bash
 npm install @runapi.ai/flux-2
-gem install runapi-flux_2
+gem install runapi-flux-2
 go get github.com/runapi-ai/flux-2-sdk/go@latest
 ```
 
@@ -41,7 +61,7 @@ For short scripts, use `run` with the same JSON body to create the task and wait
 ## Repository layout
 
 - `js/` publishes `@runapi.ai/flux-2`.
-- `ruby/` publishes `runapi-flux_2` when RubyGems publishing resumes.
+- `ruby/` publishes `runapi-flux-2` when RubyGems publishing resumes.
 - `go/` publishes `github.com/runapi-ai/flux-2-sdk/go` and depends on `github.com/runapi-ai/core-sdk/go`.
 
 ## Public links
@@ -68,7 +88,7 @@ Default pricing link for the flux api SDK: https://runapi.ai/models/flux-2/pro-t
 
 ### Which package should I install for flux api work?
 
-Install the model package for your language: `@runapi.ai/flux-2`, `runapi-flux_2`, or `github.com/runapi-ai/flux-2-sdk/go`. Install core SDK packages only when you are building shared SDK infrastructure.
+Install the model package for your language: `@runapi.ai/flux-2`, `runapi-flux-2`, or `github.com/runapi-ai/flux-2-sdk/go`. Install core SDK packages only when you are building shared SDK infrastructure.
 
 ### Where should public links point?
 
