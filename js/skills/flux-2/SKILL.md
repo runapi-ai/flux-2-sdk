@@ -1,22 +1,79 @@
 ---
 name: flux-2
-description: Generate images with Flux 2 Pro/Flex text-to-image and image-to-image through RunAPI.ai using the @runapi.ai/flux-2 Node/TypeScript SDK. Use when the user asks to add Flux 2 image generation or writes against @runapi.ai/flux-2. Triggers on "flux2", "flux 2", "image generation", "生成图片", "@runapi.ai/flux-2".
-documentation: https://runapi.ai/models/flux-2
-provider_page: https://runapi.ai/providers/black-forest-labs
-catalog: https://runapi.ai/models
+description: Generate and edit images with Flux 2 through RunAPI. Use when the user asks an agent to create, edit, or transform images with Flux 2. Default to the RunAPI CLI for one-off generation; use SDKs only when the user is integrating RunAPI into an app or backend.
+documentation: https://runapi.ai/models/flux-2.md
+provider_page: https://runapi.ai/providers/black-forest-labs.md
+catalog: https://runapi.ai/models.md
+metadata:
+  openclaw:
+    homepage: https://runapi.ai/models/flux-2
+    requires:
+      bins:
+      - runapi
+    install:
+    - kind: brew
+      formula: runapi-ai/tap/runapi
+      bins:
+      - runapi
+    envVars:
+    - name: RUNAPI_API_KEY
+      required: false
+      description: Optional RunAPI API key; agents should prefer environment auth or saved CLI config. Browser login is interactive fallback only.
 ---
-# @runapi.ai/flux-2 — RunAPI.ai Flux 2 image generation
 
-Use `Flux2Client` for Flux 2 image tasks.
+# Flux 2 on RunAPI
 
-```ts
-import { Flux2Client } from '@runapi.ai/flux-2';
+Generate and edit images with Flux 2 through RunAPI. The default path for one-off agent tasks is the `runapi` CLI; SDKs are for application integration.
 
-const client = new Flux2Client({ apiKey: process.env.RUNAPI_API_KEY });
+## Routing decision
 
-const result = await client.textToImage.run({
-  model: 'flux-2-pro-text-to-image',
-  prompt: 'A cinematic product photo on warm paper',
-  aspect_ratio: '1:1',
-});
+- One-off generation, editing, or transformation for the user → use the **CLI path** with the `runapi` binary.
+- Building an app, backend, worker, library, or production codebase → use the **SDK integration path**.
+
+## CLI path
+
+The `runapi` binary is the runtime dependency. Run `runapi auth status` first. For agents and headless runs, prefer `RUNAPI_API_KEY` or import it into saved config with `printf '%s' "$RUNAPI_API_KEY" | runapi auth import-token --token -`. Use `runapi login` only when the user explicitly wants interactive browser auth.
+
+Inspect the available actions and request fields with CLI help:
+
+```shell
+runapi flux-2 --help
+runapi flux-2 text-to-image --help
 ```
+
+Run a one-off task (synchronous — polls until the task completes):
+
+```shell
+runapi flux-2 text-to-image --input-file request.json
+```
+
+Submit asynchronously and poll separately:
+
+```shell
+runapi flux-2 text-to-image --async --input-file request.json
+runapi wait <task-id> --service flux-2 --action text-to-image
+```
+
+Available actions: `text-to-image`.
+
+## SDK integration path
+
+When integrating Flux 2 into an app, backend, worker, or library — not for one-off tasks — use a RunAPI SDK package:
+
+- JavaScript / TypeScript: `@runapi.ai/flux-2`
+- Ruby: `runapi-flux_2`
+- Go: `github.com/runapi-ai/flux-2-sdk/go`
+
+## References
+
+- Model overview, pricing, and rate limits: https://runapi.ai/models/flux-2.md
+- Provider comparison: https://runapi.ai/providers/black-forest-labs.md
+- Full model catalog: https://runapi.ai/models.md
+
+## Variants
+
+- [Flux 2 Pro text to image](https://runapi.ai/models/flux-2/pro-text-to-image.md)
+- [Flux 2 Pro image to image](https://runapi.ai/models/flux-2/pro-image-to-image.md)
+- [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image.md)
+- [Flux 2 Flex image to image](https://runapi.ai/models/flux-2/flex-image-to-image.md)
+
