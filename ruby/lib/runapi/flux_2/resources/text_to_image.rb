@@ -51,30 +51,12 @@ module RunApi
           raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
 
           model = param(params, :model)
-          unless Types::MODELS.include?(model)
-            raise Core::ValidationError, "Invalid model: #{model}. Must be one of: #{Types::MODELS.join(", ")}"
+          unless Types::TEXT_TO_IMAGE_MODELS.include?(model)
+            raise Core::ValidationError, "Invalid model: #{model}. Must be one of: #{Types::TEXT_TO_IMAGE_MODELS.join(", ")}"
           end
 
-          validate_aspect_ratio!(params, model)
-          validate_optional!(params, :resolution, Types::RESOLUTIONS)
-          validate_input_urls!(params, model)
-        end
-
-        def validate_aspect_ratio!(params, model)
-          return unless param(params, :aspect_ratio)
-
-          allowed = Types::I2I_MODELS.include?(model) ? Types::ASPECT_RATIOS_I2I : Types::ASPECT_RATIOS
-          value = param(params, :aspect_ratio)
-          unless allowed.include?(value)
-            raise Core::ValidationError, "Invalid aspect_ratio: #{value}. Must be one of: #{allowed.join(", ")}"
-          end
-        end
-
-        def validate_input_urls!(params, model)
-          return unless Types::I2I_MODELS.include?(model)
-
-          urls = param(params, :input_urls)
-          raise Core::ValidationError, "input_urls is required for image-to-image models" if urls.nil? || (urls.respond_to?(:empty?) && urls.empty?)
+          validate_optional!(params, :aspect_ratio, Types::ASPECT_RATIOS)
+          validate_optional!(params, :output_resolution, Types::OUTPUT_RESOLUTIONS)
         end
       end
     end

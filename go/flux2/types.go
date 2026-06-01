@@ -3,13 +3,22 @@ package flux2
 type TaskStatus string
 
 type TextToImageParams struct {
-	Model       string   `json:"model" help:"required; flux-2-pro-text-to-image, flux-2-pro-image-to-image, flux-2-flex-text-to-image, or flux-2-flex-image-to-image"`
-	Prompt      string   `json:"prompt" help:"required; 3-5000 chars"`
-	AspectRatio string   `json:"aspect_ratio,omitempty" help:"optional; 1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3, or auto (I2I only). Default: 1:1"`
-	Resolution  string   `json:"resolution,omitempty" help:"optional; 1K or 2K. Default: 1K"`
-	InputURLs   []string `json:"input_urls,omitempty" help:"required for I2I; 1-8 image URLs"`
-	NsfwChecker *bool    `json:"nsfw_checker,omitempty" help:"optional; content filtering. Default: false"`
-	CallbackURL string   `json:"callback_url,omitempty" help:"optional; webhook URL"`
+	Model               string   `json:"model" help:"required; model slug"`
+	Prompt              string   `json:"prompt" help:"required; 3-5000 chars"`
+	AspectRatio         string   `json:"aspect_ratio,omitempty" help:"optional; output aspect ratio; Default: 1:1"`
+	OutputResolution    string   `json:"output_resolution,omitempty" help:"optional; output resolution; Default: 1k"`
+	EnableSafetyChecker *bool    `json:"enable_safety_checker,omitempty" help:"optional; content safety check toggle"`
+	CallbackURL         string   `json:"callback_url,omitempty" help:"optional; webhook URL"`
+}
+
+type RemixImageParams struct {
+	Model               string   `json:"model" help:"required; model slug"`
+	Prompt              string   `json:"prompt" help:"required; 3-5000 chars"`
+	SourceImageURLs     []string `json:"source_image_urls" help:"required; 1-8 source image URLs"`
+	AspectRatio         string   `json:"aspect_ratio,omitempty" help:"optional; output aspect ratio; auto preserves source image ratio"`
+	OutputResolution    string   `json:"output_resolution,omitempty" help:"optional; output resolution; Default: 1k"`
+	EnableSafetyChecker *bool    `json:"enable_safety_checker,omitempty" help:"optional; content safety check toggle"`
+	CallbackURL         string   `json:"callback_url,omitempty" help:"optional; webhook URL"`
 }
 
 type AsyncTaskResponse struct {
@@ -30,3 +39,5 @@ type TextToImageResponse struct {
 	AsyncTaskResponse
 	Images []Image `json:"images,omitempty"`
 }
+
+type RemixImageResponse = TextToImageResponse

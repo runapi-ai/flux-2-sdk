@@ -21,7 +21,7 @@
 </div>
 <br/>
 
-Generate images with Flux 2 Pro and Flex text-to-image and image-to-image. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Flux 2 through RunAPI.
+Generate and remix images with Flux 2 Pro and Flex. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Flux 2 through RunAPI.
 
 The canonical agent file is `skills/flux-2/SKILL.md`.
 
@@ -55,6 +55,13 @@ const result = await client.textToImage.run({
   prompt: 'A cinematic product photo on warm paper',
   aspect_ratio: '1:1',
 });
+
+const remix = await client.remixImage.run({
+  model: 'flux-2-pro-remix-image',
+  prompt: 'Make this product shot feel like a warm editorial photo',
+  source_image_urls: ['https://example.com/source.jpg'],
+  aspect_ratio: 'auto',
+});
 ```
 
 ## Routing
@@ -70,9 +77,9 @@ const result = await client.textToImage.run({
 ## Variants
 
 - [Flux 2 Pro text to image](https://runapi.ai/models/flux-2/pro-text-to-image)
-- [Flux 2 Pro image to image](https://runapi.ai/models/flux-2/pro-image-to-image)
+- [Flux 2 Pro remix image](https://runapi.ai/models/flux-2/pro-remix-image)
 - [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image)
-- [Flux 2 Flex image to image](https://runapi.ai/models/flux-2/flex-image-to-image)
+- [Flux 2 Flex remix image](https://runapi.ai/models/flux-2/flex-remix-image)
 
 ## Agent rules
 

@@ -3,41 +3,41 @@ import type { AsyncTaskStatus } from '@runapi.ai/core';
 // Model types
 export type Flux2Model =
   | 'flux-2-pro-text-to-image'
-  | 'flux-2-pro-image-to-image'
+  | 'flux-2-pro-remix-image'
   | 'flux-2-flex-text-to-image'
-  | 'flux-2-flex-image-to-image';
+  | 'flux-2-flex-remix-image';
 
 // Aspect ratio for text-to-image
 export type AspectRatio = '1:1' | '4:3' | '3:4' | '16:9' | '9:16' | '3:2' | '2:3';
 
-// Aspect ratio for image-to-image (includes 'auto')
-export type AspectRatioI2I = AspectRatio | 'auto';
+// Aspect ratio for remix-image (includes 'auto')
+export type RemixAspectRatio = AspectRatio | 'auto';
 
-// Resolution
-export type Resolution = '1K' | '2K';
+// Output resolution
+export type OutputResolution = '1k' | '2k';
 
 // Text-to-image generation params
 export interface GenerationT2IParams {
   model: 'flux-2-pro-text-to-image' | 'flux-2-flex-text-to-image';
   prompt: string;
   callback_url?: string;
-  resolution?: Resolution;
-  nsfw_checker?: boolean;
+  output_resolution?: OutputResolution;
+  enable_safety_checker?: boolean;
   aspect_ratio?: AspectRatio;
 }
 
-// Image-to-image generation params
-export interface GenerationI2IParams {
-  model: 'flux-2-pro-image-to-image' | 'flux-2-flex-image-to-image';
+// Remix-image generation params
+export interface RemixImageParams {
+  model: 'flux-2-pro-remix-image' | 'flux-2-flex-remix-image';
   prompt: string;
-  input_urls: string[];
+  source_image_urls: string[];
   callback_url?: string;
-  resolution?: Resolution;
-  nsfw_checker?: boolean;
-  aspect_ratio?: AspectRatioI2I;
+  output_resolution?: OutputResolution;
+  enable_safety_checker?: boolean;
+  aspect_ratio?: RemixAspectRatio;
 }
 
-export type TextToImageParams = GenerationT2IParams | GenerationI2IParams;
+export type TextToImageParams = GenerationT2IParams;
 
 // Response types
 export interface TaskCreateResponse {
@@ -65,3 +65,6 @@ export type CompletedTextToImageResponse = TextToImageResponse & {
   status: 'completed';
   images: Image[];
 };
+
+export type RemixImageResponse = TextToImageResponse;
+export type CompletedRemixImageResponse = CompletedTextToImageResponse;

@@ -14,7 +14,7 @@ result = client.text_to_image.run(
   model: "flux-2-pro-text-to-image",
   prompt: "a serene mountain lake at sunset",
   aspect_ratio: "16:9",
-  resolution: "2K"
+  output_resolution: "2k"
 )
 puts "Status: #{result["status"]}"
 puts "Images: #{result["images"]}"
@@ -25,17 +25,17 @@ result = client.text_to_image.run(
   model: "flux-2-flex-text-to-image",
   prompt: "cyberpunk cityscape at night",
   aspect_ratio: "1:1",
-  resolution: "1K"
+  output_resolution: "1k"
 )
 puts "Status: #{result["status"]}"
 puts "Images: #{result["images"]}"
 
-# 3. Image-to-image mode
-puts "\n=== Image-to-Image ==="
-result = client.text_to_image.run(
-  model: "flux-2-pro-image-to-image",
+# 3. Remix image mode
+puts "\n=== Remix Image ==="
+result = client.remix_image.run(
+  model: "flux-2-pro-remix-image",
   prompt: "transform into watercolor painting style",
-  input_urls: [ "https://example.com/photo.jpg" ],
+  source_image_urls: ["https://cdn.runapi.ai/public/samples/photo.jpg"],
   aspect_ratio: "auto"
 )
 puts "Status: #{result["status"]}"
@@ -67,8 +67,8 @@ end
 
 begin
   client.text_to_image.create(
-    model: "flux-2-pro-image-to-image",
-    prompt: "test without input_urls"
+    model: "flux-2-pro-remix-image",
+    prompt: "test"
   )
 rescue RunApi::Core::ValidationError => e
   puts "Caught ValidationError: #{e.message}"

@@ -20,6 +20,7 @@ describe('Flux2Client', () => {
   it('initializes with an API key', () => {
     const client = new Flux2Client({ apiKey: 'test-key' });
     expect(client.textToImage).toBeDefined();
+    expect(client.remixImage).toBeDefined();
   });
 
   it('throws when apiKey missing and env unset', () => {
@@ -31,6 +32,7 @@ describe('Flux2Client', () => {
     process.env.RUNAPI_API_KEY = 'env-key';
     const client = new Flux2Client();
     expect(client.textToImage).toBeDefined();
+    expect(client.remixImage).toBeDefined();
   });
 
   it('exposes textToImage resource', () => {
@@ -39,5 +41,8 @@ describe('Flux2Client', () => {
     expect(typeof client.textToImage.run).toBe('function');
     expect(typeof client.textToImage.create).toBe('function');
     expect(typeof client.textToImage.get).toBe('function');
+    expect(typeof client.remixImage.run).toBe('function');
+    expect(typeof client.remixImage.create).toBe('function');
+    expect(typeof client.remixImage.get).toBe('function');
   });
 });

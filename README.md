@@ -20,7 +20,7 @@
 </div>
 <br/>
 
-The flux api SDK packages JavaScript, Ruby, and Go clients for Flux 2 on RunAPI. Use this flux api SDK for text-to-image, image-to-image, edit, and creative production workflows that need typed installs, JSON request bodies, task polling, and consistent RunAPI errors across services.
+The flux api SDK packages JavaScript, Ruby, and Go clients for Flux 2 on RunAPI. Use this flux api SDK for text-to-image, remix-image, and creative production workflows that need typed installs, JSON request bodies, task polling, and consistent RunAPI errors across services.
 
 Flux 2 belongs to the Black Forest Labs catalog on RunAPI. The public model page is https://runapi.ai/models/flux-2; variant pages below carry pricing, rate-limit, and commercial-usage details. The public `flux-2-sdk` repository groups the JavaScript, Ruby, and Go packages for this model.
 
@@ -39,7 +39,7 @@ go get github.com/runapi-ai/flux-2-sdk/go@latest
 - Use `create` for submit-only jobs, `get` for status lookup, and `run` for submit-and-poll scripts.
 - Handle authentication, validation, rate limits, insufficient credits, task failures, and polling timeouts through RunAPI SDK errors.
 
-The JavaScript client exposes textToImage resources, and the Ruby and Go packages mirror the same RunAPI task lifecycle.
+The JavaScript client exposes `textToImage` and `remixImage` resources, and the Ruby and Go packages mirror the same RunAPI task lifecycle.
 
 ## JavaScript quick start
 
@@ -54,6 +54,15 @@ const task = await client.textToImage.create({
 });
 
 const status = await client.textToImage.get(task.id);
+```
+
+```typescript
+const remix = await client.remixImage.create({
+  model: 'flux-2-pro-remix-image',
+  prompt: 'Turn this product shot into a warm editorial photo',
+  source_image_urls: ['https://example.com/source.jpg'],
+  aspect_ratio: 'auto',
+});
 ```
 
 For short scripts, use `run` with the same JSON body to create the task and wait for completion. For web request handlers, prefer `create` plus webhook or later `get` polling so the server does not hold a worker open.
@@ -78,9 +87,9 @@ For short scripts, use `run` with the same JSON body to create the task and wait
 
 Use the most specific flux api variant page for pricing, rate limits, and commercial usage:
 - [Flux 2 Pro text to image](https://runapi.ai/models/flux-2/pro-text-to-image)
-- [Flux 2 Pro image to image](https://runapi.ai/models/flux-2/pro-image-to-image)
+- [Flux 2 Pro remix image](https://runapi.ai/models/flux-2/pro-remix-image)
 - [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image)
-- [Flux 2 Flex image to image](https://runapi.ai/models/flux-2/flex-image-to-image)
+- [Flux 2 Flex remix image](https://runapi.ai/models/flux-2/flex-remix-image)
 
 Default pricing link for the flux api SDK: https://runapi.ai/models/flux-2/pro-text-to-image
 

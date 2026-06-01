@@ -46,7 +46,7 @@ describe('TextToImage', () => {
       const result = await textToImage.create({
         model: 'flux-2-flex-text-to-image',
         prompt: 'Abstract art in pastel colors',
-        resolution: '2K',
+        output_resolution: '2k',
       });
 
       expect(mockHttp.request).toHaveBeenCalledWith(
@@ -56,62 +56,11 @@ describe('TextToImage', () => {
           body: {
             model: 'flux-2-flex-text-to-image',
             prompt: 'Abstract art in pastel colors',
-            resolution: '2K',
+            output_resolution: '2k',
           },
         }
       );
       expect(result).toEqual(mockResponse);
-    });
-
-    it('should send correct request for image-to-image with pro model', async () => {
-      const mockResponse: TaskCreateResponse = { id: 'task-789' };
-      vi.mocked(mockHttp.request).mockResolvedValueOnce(mockResponse);
-
-      const textToImage = new TextToImage(mockHttp);
-      const result = await textToImage.create({
-        model: 'flux-2-pro-image-to-image',
-        prompt: 'Transform into oil painting style',
-        input_urls: ['https://example.com/photo.jpg'],
-      });
-
-      expect(mockHttp.request).toHaveBeenCalledWith(
-        'POST',
-        '/api/v1/flux_2/text_to_image',
-        {
-          body: {
-            model: 'flux-2-pro-image-to-image',
-            prompt: 'Transform into oil painting style',
-            input_urls: ['https://example.com/photo.jpg'],
-          },
-        }
-      );
-      expect(result).toEqual(mockResponse);
-    });
-
-    it('should send correct request for image-to-image with flex model and auto aspect ratio', async () => {
-      const mockResponse: TaskCreateResponse = { id: 'task-i2i' };
-      vi.mocked(mockHttp.request).mockResolvedValueOnce(mockResponse);
-
-      const textToImage = new TextToImage(mockHttp);
-      await textToImage.create({
-        model: 'flux-2-flex-image-to-image',
-        prompt: 'Enhance the details',
-        input_urls: ['https://example.com/input.jpg'],
-        aspect_ratio: 'auto',
-      });
-
-      expect(mockHttp.request).toHaveBeenCalledWith(
-        'POST',
-        '/api/v1/flux_2/text_to_image',
-        {
-          body: {
-            model: 'flux-2-flex-image-to-image',
-            prompt: 'Enhance the details',
-            input_urls: ['https://example.com/input.jpg'],
-            aspect_ratio: 'auto',
-          },
-        }
-      );
     });
 
     it('should include optional parameters for text-to-image', async () => {
@@ -123,8 +72,8 @@ describe('TextToImage', () => {
         model: 'flux-2-pro-text-to-image',
         prompt: 'Test image',
         callback_url: 'https://example.com/callback',
-        resolution: '2K',
-        nsfw_checker: true,
+        output_resolution: '2k',
+        enable_safety_checker: true,
         aspect_ratio: '3:2',
       });
 
@@ -136,45 +85,14 @@ describe('TextToImage', () => {
             model: 'flux-2-pro-text-to-image',
             prompt: 'Test image',
             callback_url: 'https://example.com/callback',
-            resolution: '2K',
-            nsfw_checker: true,
+            output_resolution: '2k',
+            enable_safety_checker: true,
             aspect_ratio: '3:2',
           },
         }
       );
     });
 
-    it('should include optional parameters for image-to-image', async () => {
-      const mockResponse: TaskCreateResponse = { id: 'task-opt2' };
-      vi.mocked(mockHttp.request).mockResolvedValueOnce(mockResponse);
-
-      const textToImage = new TextToImage(mockHttp);
-      await textToImage.create({
-        model: 'flux-2-pro-image-to-image',
-        prompt: 'Style transfer',
-        input_urls: ['https://example.com/photo.jpg'],
-        callback_url: 'https://example.com/callback',
-        resolution: '1K',
-        nsfw_checker: false,
-        aspect_ratio: '9:16',
-      });
-
-      expect(mockHttp.request).toHaveBeenCalledWith(
-        'POST',
-        '/api/v1/flux_2/text_to_image',
-        {
-          body: {
-            model: 'flux-2-pro-image-to-image',
-            prompt: 'Style transfer',
-            input_urls: ['https://example.com/photo.jpg'],
-            callback_url: 'https://example.com/callback',
-            resolution: '1K',
-            nsfw_checker: false,
-            aspect_ratio: '9:16',
-          },
-        }
-      );
-    });
   });
 
   describe('get', () => {
@@ -201,7 +119,7 @@ describe('TextToImage', () => {
         id: 'task-123',
         status: 'completed',
         images: [
-          { url: 'https://example.com/result.png' },
+          { url: 'https://cdn.runapi.ai/public/samples/result.png' },
         ],
       };
       vi.mocked(mockHttp.request).mockResolvedValueOnce(mockResponse);
@@ -211,7 +129,7 @@ describe('TextToImage', () => {
 
       expect(result.status).toBe('completed');
       expect(result.images).toHaveLength(1);
-      expect(result.images?.[0].url).toBe('https://example.com/result.png');
+      expect(result.images?.[0].url).toBe('https://cdn.runapi.ai/public/samples/result.png');
     });
 
     it('should return failed status with error', async () => {
@@ -241,7 +159,7 @@ describe('TextToImage', () => {
         id: 'task-123',
         status: 'completed',
         images: [
-          { url: 'https://example.com/result.png' },
+          { url: 'https://cdn.runapi.ai/public/samples/result.png' },
         ],
       };
 

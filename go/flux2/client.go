@@ -1,4 +1,4 @@
-// Package flux2 provides the Flux 2 text-to-image API client.
+// Package flux2 provides the Flux 2 image generation API client.
 //
 //	client, err := flux_2.NewClient(option.WithAPIKey("sk-your-api-key"))
 //	result, err := client.TextToImage.Run(ctx, flux_2.TextToImageParams{
@@ -13,12 +13,17 @@ import (
 	"github.com/runapi-ai/core-sdk/go/option"
 )
 
-const textToImagePath = "/api/v1/flux_2/text_to_image"
+const (
+	textToImagePath = "/api/v1/flux_2/text_to_image"
+	remixImagePath = "/api/v1/flux_2/remix_image"
+)
 
-// Client is the Flux 2 text-to-image API client.
+// Client is the Flux 2 image generation API client.
 type Client struct {
 	// TextToImage provides text-to-image operations.
 	TextToImage *TextToImage
+	// RemixImage provides source-image remix operations.
+	RemixImage *RemixImage
 }
 
 // NewClient creates a Flux 2 client with the given options.
@@ -36,7 +41,10 @@ func NewClient(opts ...option.ClientOption) (*Client, error) {
 
 // NewClientWithHTTP creates a Flux 2 client with a pre-configured HTTP transport.
 func NewClientWithHTTP(httpClient core.HTTPClient) *Client {
-	return &Client{TextToImage: &TextToImage{http: httpClient}}
+	return &Client{
+		TextToImage: &TextToImage{http: httpClient},
+		RemixImage: &RemixImage{http: httpClient},
+	}
 }
 
 // TextToImage creates text-to-image tasks using Flux 2 models.
@@ -53,4 +61,20 @@ func (r *TextToImage) Get(ctx context.Context, id string, opts ...option.Request
 func (r *TextToImage) Run(ctx context.Context, params TextToImageParams, opts ...option.RequestOption) (*TextToImageResponse, error) {
 	_, pollingOptions := option.ResolveRequestOptions(opts...)
 	return core.RunAsync(ctx, func(ctx context.Context) (*core.TaskCreateResponse, error) { return r.Create(ctx, params, opts...) }, func(ctx context.Context, id string) (*TextToImageResponse, error) { return r.Get(ctx, id, opts...) }, pollingOptions)
+}
+
+// RemixImage creates prompt-guided variations from source images.
+type RemixImage struct{ http core.HTTPClient }
+
+func (r *RemixImage) Create(ctx context.Context, params RemixImageParams, opts ...option.RequestOption) (*core.TaskCreateResponse, error) {
+	requestOptions, _ := option.ResolveRequestOptions(opts...)
+	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, remixImagePath, core.CompactParams(params), requestOptions)
+}
+func (r *RemixImage) Get(ctx context.Context, id string, opts ...option.RequestOption) (*RemixImageResponse, error) {
+	requestOptions, _ := option.ResolveRequestOptions(opts...)
+	return core.GetJSON[RemixImageResponse](ctx, r.http, core.ResourcePath(remixImagePath, id), requestOptions)
+}
+func (r *RemixImage) Run(ctx context.Context, params RemixImageParams, opts ...option.RequestOption) (*RemixImageResponse, error) {
+	_, pollingOptions := option.ResolveRequestOptions(opts...)
+	return core.RunAsync(ctx, func(ctx context.Context) (*core.TaskCreateResponse, error) { return r.Create(ctx, params, opts...) }, func(ctx context.Context, id string) (*RemixImageResponse, error) { return r.Get(ctx, id, opts...) }, pollingOptions)
 }

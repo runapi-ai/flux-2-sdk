@@ -1,5 +1,6 @@
 import { createHttpClient, type ClientOptions } from '@runapi.ai/core';
 import { TextToImage } from './resources/text-to-image';
+import { RemixImage } from './resources/remix-image';
 
 /**
  * Flux 2 text-to-image API client.
@@ -20,9 +21,12 @@ import { TextToImage } from './resources/text-to-image';
 export class Flux2Client {
   /** Text-to-image operations. */
   public readonly textToImage: TextToImage;
+  /** Remix-image operations. */
+  public readonly remixImage: RemixImage;
 
   constructor(options: ClientOptions = {}) {
     const http = createHttpClient(options);
     this.textToImage = new TextToImage(http);
+    this.remixImage = new RemixImage(http);
   }
 }

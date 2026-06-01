@@ -1,36 +1,45 @@
 # Flux API Go SDK for RunAPI
 
-The flux api Go SDK is the language-specific package for Flux 2 on RunAPI. Use this flux api package for text-to-image, image-to-image, edit, and creative production flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Go.
+The flux api Go SDK is the language-specific package for Flux 2 on RunAPI. Use this flux api package for text-to-image, remix-image, and creative production flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Go.
 
-This flux api README is the Go package guide inside the public `flux2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
+This flux api README is the Go package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
 
 ## Install
 
 ```bash
-go get github.com/runapi-ai/flux2-sdk/go@latest
+go get github.com/runapi-ai/flux-2-sdk/go@latest
 ```
 
 ## Quick start
 
 ```go
 import (
-  "context"
+	"context"
 
-  "github.com/runapi-ai/flux2-sdk/go/flux2"
+	"github.com/runapi-ai/flux-2-sdk/go/flux2"
 )
 
 client, err := flux2.NewClient()
-task, err := client.Generations.Create(context.Background(), flux2.GenerationParams{
-  // Pass the Flux 2 JSON request body from https://runapi.ai/docs#flux-2.
+task, err := client.TextToImage.Create(context.Background(), flux2.TextToImageParams{
+	Model: "flux-2-pro-text-to-image",
+	Prompt: "A cinematic product photo on warm paper",
+	AspectRatio: "1:1",
 })
-status, err := client.Generations.Get(context.Background(), task.ID)
+status, err := client.TextToImage.Get(context.Background(), task.ID)
+
+remix, err := client.RemixImage.Create(context.Background(), flux2.RemixImageParams{
+	Model: "flux-2-pro-remix-image",
+	Prompt: "Turn this product shot into a warm editorial photo",
+	SourceImageURLs: []string{"https://example.com/source.jpg"},
+	AspectRatio: "auto",
+})
 ```
 
 Use `create` when you want to submit a task and return quickly, `get` when you need the latest task state, and `run` when a script should create and poll until completion. In web request handlers, prefer `create` plus webhook or later `get` polling so a worker is not held open.
 
 ## Language notes
 
-Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when building image services, CLIs, or workers. The available resources include generations. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
+Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when building image services, CLIs, or workers. The available resources include `TextToImage` and `RemixImage`. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
 
 ## Links
 
@@ -40,7 +49,7 @@ Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when bu
 - Pricing and rate limits: https://runapi.ai/models/flux-2/pro-text-to-image
 - Provider comparison: https://runapi.ai/providers/black-forest-labs
 - Full catalog: https://runapi.ai/models
-- Repository: https://github.com/runapi-ai/flux2-sdk
+- Repository: https://github.com/runapi-ai/flux-2-sdk
 
 ## License
 

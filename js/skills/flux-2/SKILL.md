@@ -1,6 +1,6 @@
 ---
 name: flux-2
-description: Generate and edit images with Flux 2 through RunAPI. Use when the user asks an agent to create, edit, or transform images with Flux 2. Default to the RunAPI CLI for one-off generation; use SDKs only when the user is integrating RunAPI into an app or backend.
+description: Generate and remix images with Flux 2 through RunAPI. Use when the user asks an agent to create or transform images with Flux 2. Default to the RunAPI CLI for one-off generation; use SDKs only when the user is integrating RunAPI into an app or backend.
 documentation: https://runapi.ai/models/flux-2.md
 provider_page: https://runapi.ai/providers/black-forest-labs.md
 catalog: https://runapi.ai/models.md
@@ -23,28 +23,30 @@ metadata:
 
 # Flux 2 on RunAPI
 
-Generate and edit images with Flux 2 through RunAPI. The default path for one-off agent tasks is the `runapi` CLI; SDKs are for application integration.
+Generate and remix images with Flux 2 through RunAPI. The default path for one-off agent tasks is the `runapi` CLI; SDKs are for application integration.
 
 ## Routing decision
 
-- One-off generation, editing, or transformation for the user → use the **CLI path** with the `runapi` binary.
+- One-off generation or remixing for the user → use the **CLI path** with the `runapi` binary.
 - Building an app, backend, worker, library, or production codebase → use the **SDK integration path**.
 
 ## CLI path
 
 The `runapi` binary is the runtime dependency. Run `runapi auth status` first. For agents and headless runs, prefer `RUNAPI_API_KEY` or import it into saved config with `printf '%s' "$RUNAPI_API_KEY" | runapi auth import-token --token -`. Use `runapi login` only when the user explicitly wants interactive browser auth.
 
-Inspect the available actions and request fields with CLI help:
+Inspect the available commands and request fields with CLI help:
 
 ```shell
 runapi flux-2 --help
 runapi flux-2 text-to-image --help
+runapi flux-2 remix-image --help
 ```
 
 Run a one-off task (synchronous — polls until the task completes):
 
 ```shell
 runapi flux-2 text-to-image --input-file request.json
+runapi flux-2 remix-image --input-file remix-request.json
 ```
 
 Submit asynchronously and poll separately:
@@ -52,9 +54,11 @@ Submit asynchronously and poll separately:
 ```shell
 runapi flux-2 text-to-image --async --input-file request.json
 runapi wait <task-id> --service flux-2 --action text-to-image
+runapi flux-2 remix-image --async --input-file remix-request.json
+runapi wait <task-id> --service flux-2 --action remix-image
 ```
 
-Available actions: `text-to-image`.
+Available commands: `text-to-image`, `remix-image`.
 
 ## SDK integration path
 
@@ -73,7 +77,6 @@ When integrating Flux 2 into an app, backend, worker, or library — not for one
 ## Variants
 
 - [Flux 2 Pro text to image](https://runapi.ai/models/flux-2/pro-text-to-image.md)
-- [Flux 2 Pro image to image](https://runapi.ai/models/flux-2/pro-image-to-image.md)
+- [Flux 2 Pro remix image](https://runapi.ai/models/flux-2/pro-remix-image.md)
 - [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image.md)
-- [Flux 2 Flex image to image](https://runapi.ai/models/flux-2/flex-image-to-image.md)
-
+- [Flux 2 Flex remix image](https://runapi.ai/models/flux-2/flex-remix-image.md)
