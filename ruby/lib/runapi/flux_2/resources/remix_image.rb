@@ -3,6 +3,8 @@
 module RunApi
   module Flux2
     module Resources
+      # Flux 2 image remix resource.
+      # Transform source images guided by a text prompt.
       class RemixImage
         include RunApi::Core::ResourceHelpers
 

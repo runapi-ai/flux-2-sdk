@@ -1,9 +1,12 @@
-import { createHttpClient, type ClientOptions } from '@runapi.ai/core';
+import { BaseClient, type ClientOptions } from '@runapi.ai/core';
 import { TextToImage } from './resources/text-to-image';
 import { RemixImage } from './resources/remix-image';
 
 /**
- * Flux 2 text-to-image API client.
+ * Flux 2 text-to-image and remix API client.
+ *
+ * Pro and flex tiers for both text-to-image generation and
+ * text-guided image remixing from source images.
  *
  * @example
  * ```typescript
@@ -18,15 +21,15 @@ import { RemixImage } from './resources/remix-image';
  * });
  * ```
  */
-export class Flux2Client {
-  /** Text-to-image operations. */
+export class Flux2Client extends BaseClient {
+  /** Text-to-image generation. */
   public readonly textToImage: TextToImage;
-  /** Remix-image operations. */
+  /** Transform source images with text-guided prompts. */
   public readonly remixImage: RemixImage;
 
   constructor(options: ClientOptions = {}) {
-    const http = createHttpClient(options);
-    this.textToImage = new TextToImage(http);
-    this.remixImage = new RemixImage(http);
+    super(options);
+    this.textToImage = new TextToImage(this.http);
+    this.remixImage = new RemixImage(this.http);
   }
 }
