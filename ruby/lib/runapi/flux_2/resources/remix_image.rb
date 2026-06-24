@@ -24,34 +24,12 @@ module RunApi
 
         def create(**params)
           params = compact_params(params)
-          validate_params!(params)
+          validate_contract!(CONTRACT["remix-image"], params)
           request(:post, ENDPOINT, body: params)
         end
 
         def get(id)
           request(:get, "#{ENDPOINT}/#{id}")
-        end
-
-        private
-
-        def validate_params!(params)
-          model = param(params, :model)
-          raise Core::ValidationError, "model is required" unless model
-          unless Types::REMIX_MODELS.include?(model)
-            raise Core::ValidationError, "Invalid model: #{model}. Must be one of: #{Types::REMIX_MODELS.join(", ")}"
-          end
-
-          prompt = param(params, :prompt)
-          raise Core::ValidationError, "prompt is required" unless prompt
-
-          validate_optional!(params, :aspect_ratio, Types::REMIX_ASPECT_RATIOS)
-          validate_optional!(params, :output_resolution, Types::OUTPUT_RESOLUTIONS)
-          validate_source_image_urls!(params)
-        end
-
-        def validate_source_image_urls!(params)
-          urls = param(params, :source_image_urls)
-          raise Core::ValidationError, "source_image_urls is required" if urls.nil? || (urls.respond_to?(:empty?) && urls.empty?)
         end
       end
     end

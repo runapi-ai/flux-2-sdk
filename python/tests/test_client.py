@@ -111,7 +111,7 @@ def test_run_polls_and_narrows_completed_type():
 
 def test_create_requires_model():
     client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="model is required"):
+    with pytest.raises(ValidationError, match="model must be one of:"):
         client.text_to_image.create(prompt="hi")
 
 
@@ -123,13 +123,13 @@ def test_create_requires_prompt():
 
 def test_create_rejects_unknown_model():
     client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="Invalid model"):
+    with pytest.raises(ValidationError, match="model must be one of:"):
         client.text_to_image.create(model="not-a-model", prompt="hi")
 
 
 def test_create_rejects_invalid_enum():
     client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="Invalid aspect_ratio"):
+    with pytest.raises(ValidationError, match="aspect_ratio must be one of:"):
         client.text_to_image.create(model="flux-2-pro-text-to-image", prompt="hi", aspect_ratio="99:1")
 
 

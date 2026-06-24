@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
-from runapi.core import Resource, ValidationError
+from runapi.core import Resource
 
+from ..contract_gen import CONTRACT
 from ..types import (
-    OUTPUT_RESOLUTIONS,
-    REMIX_ASPECT_RATIOS,
-    REMIX_MODELS,
     CompletedRemixImageResponse,
     RemixImageResponse,
 )
@@ -45,7 +43,7 @@ class RemixImage(Resource):
             The task creation result with an id.
         """
         compacted = self._compact_params(params)
-        self._validate_params(compacted)
+        self._validate_contract(CONTRACT["remix-image"], compacted)
         return self._request("post", self.ENDPOINT, body=compacted)
 
     def get(self, id: str) -> Any:
@@ -58,21 +56,3 @@ class RemixImage(Resource):
             The current remix-image status.
         """
         return self._request("get", f"{self.ENDPOINT}/{id}")
-
-    def _validate_params(self, params: Dict[str, Any]) -> None:
-        model = params.get("model")
-        if not model:
-            raise ValidationError("model is required")
-        if model not in REMIX_MODELS:
-            joined = ", ".join(REMIX_MODELS)
-            raise ValidationError(f"Invalid model: {model}. Must be one of: {joined}")
-
-        if not params.get("prompt"):
-            raise ValidationError("prompt is required")
-
-        self._validate_optional(params, "aspect_ratio", REMIX_ASPECT_RATIOS)
-        self._validate_optional(params, "output_resolution", OUTPUT_RESOLUTIONS)
-
-        urls = params.get("source_image_urls")
-        if not urls:
-            raise ValidationError("source_image_urls is required")

@@ -2,21 +2,9 @@
 
 module RunApi
   module Flux2
-    # Type definitions and constants for Flux 2.
+    # Type definitions for Flux 2.
     # Each operation has pro (higher fidelity) and flex (faster, lower cost) tiers.
     module Types
-      MODELS = %w[
-        flux-2-pro-text-to-image flux-2-pro-remix-image
-        flux-2-flex-text-to-image flux-2-flex-remix-image
-      ].freeze
-      TEXT_TO_IMAGE_MODELS = %w[flux-2-pro-text-to-image flux-2-flex-text-to-image].freeze
-      REMIX_MODELS = %w[flux-2-pro-remix-image flux-2-flex-remix-image].freeze
-
-      ASPECT_RATIOS = %w[1:1 4:3 3:4 16:9 9:16 3:2 2:3].freeze
-      # Remix adds 'auto' to preserve the source image aspect ratio.
-      REMIX_ASPECT_RATIOS = %w[1:1 4:3 3:4 16:9 9:16 3:2 2:3 auto].freeze
-      OUTPUT_RESOLUTIONS = %w[1k 2k].freeze
-
       # A single generated image with its CDN URL.
       class Image < RunApi::Core::BaseModel
         optional :url, String

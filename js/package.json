@@ -1,7 +1,10 @@
 {
   "name": "@runapi.ai/flux-2",
+  "runapi": {
+    "slug": "flux-2"
+  },
   "version": "0.2.6",
-  "description": "RunAPI Flux 2 SDK for JavaScript, Ruby, and Go",
+  "description": "RunAPI Flux 2 SDK for text-to-image and remix-image workflows in JavaScript, Python, Ruby, Go, and Java",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -48,7 +51,15 @@
     "sdk",
     "typescript",
     "ruby",
-    "golang"
+    "golang",
+    "java",
+    "python",
+    "maven",
+    "gradle",
+    "image-generation",
+    "text-to-image",
+    "image-api",
+    "flux-api"
   ],
   "author": "RunAPI",
   "license": "Apache-2.0",
