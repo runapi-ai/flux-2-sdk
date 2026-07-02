@@ -71,7 +71,7 @@ describe('TextToImage', () => {
       await textToImage.create({
         model: 'flux-2-pro-text-to-image',
         prompt: 'Test image',
-        callback_url: 'https://example.com/callback',
+        callback_url: 'https://your-domain.com/api/callback',
         output_resolution: '2k',
         enable_safety_checker: true,
         aspect_ratio: '3:2',
@@ -84,7 +84,7 @@ describe('TextToImage', () => {
           body: {
             model: 'flux-2-pro-text-to-image',
             prompt: 'Test image',
-            callback_url: 'https://example.com/callback',
+            callback_url: 'https://your-domain.com/api/callback',
             output_resolution: '2k',
             enable_safety_checker: true,
             aspect_ratio: '3:2',

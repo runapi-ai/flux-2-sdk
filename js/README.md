@@ -1,8 +1,8 @@
-# Flux API JavaScript SDK for RunAPI
+# Flux 2 API JavaScript SDK for RunAPI
 
-The flux api JavaScript SDK is the language-specific package for Flux 2 on RunAPI. Use this flux api package for text-to-image, remix-image, and creative production flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in JavaScript.
+The Flux 2 JavaScript SDK is the language-specific package for Flux 2 on RunAPI. Use this package for image generation, image editing, and creative production workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in JavaScript.
 
-This flux api README is the JavaScript package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
+This README is the JavaScript package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
 
 ## Install
 
@@ -27,7 +27,7 @@ const status = await client.textToImage.get(task.id);
 const remix = await client.remixImage.create({
   model: 'flux-2-pro-remix-image',
   prompt: 'Turn this product shot into a warm editorial photo',
-  source_image_urls: ['https://example.com/source.jpg'],
+  source_image_urls: ['https://cdn.runapi.ai/public/samples/image.jpg'],
   aspect_ratio: 'auto',
 });
 ```
@@ -38,7 +38,7 @@ RunAPI-generated file URLs are temporary. Download and store generated images, v
 
 ## Language notes
 
-Use the TypeScript types in `src/types.ts` and the resource classes under `src/resources` when building image applications. The available resources include `textToImage` and `remixImage`. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
+Use the TypeScript types in `src/types.ts` and the resource classes under `src/resources` when building image applications. The available resources are `textToImage` and `remixImage`. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
 
 ## Links
 

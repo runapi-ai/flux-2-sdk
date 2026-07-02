@@ -145,7 +145,7 @@ def test_remix_accepts_auto_aspect_ratio():
     client.remix_image.create(
         model="flux-2-pro-remix-image",
         prompt="hi",
-        source_image_urls=["https://example.com/a.jpg"],
+        source_image_urls=["https://runapi.ai/a.jpg"],
         aspect_ratio="auto",
     )
     _, path, body = fake.calls[0]

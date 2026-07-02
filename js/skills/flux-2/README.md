@@ -59,7 +59,7 @@ const result = await client.textToImage.run({
 const remix = await client.remixImage.run({
   model: 'flux-2-pro-remix-image',
   prompt: 'Make this product shot feel like a warm editorial photo',
-  source_image_urls: ['https://example.com/source.jpg'],
+  source_image_urls: ['https://cdn.runapi.ai/public/samples/image.jpg'],
   aspect_ratio: 'auto',
 });
 ```
@@ -87,7 +87,7 @@ const remix = await client.remixImage.run({
 - RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
 - Keep API keys in `RUNAPI_API_KEY` or RunAPI CLI config; never commit secrets.
 - Prefer `create`, `get`, and `run` JSON passthrough patterns instead of inventing flags for every model parameter.
-- For flux api pricing, rate-limit, and commercial-usage answers, link to the variant page rather than the repository README.
+- For pricing, rate-limit, and commercial-usage answers, link to the variant page rather than the repository README.
 
 ## License
 

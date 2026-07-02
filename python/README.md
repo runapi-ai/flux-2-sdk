@@ -1,8 +1,8 @@
-# Flux 2 Python SDK for RunAPI
+# Flux 2 API Python SDK for RunAPI
 
-The flux 2 Python SDK is the language-specific package for Flux 2 on RunAPI. Use this flux 2 package for text-to-image, remix-image, and creative production flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Python.
+The Flux 2 Python SDK is the language-specific package for Flux 2 on RunAPI. Use this package for image generation, image editing, and creative production workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Python.
 
-This flux 2 README is the Python package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
+This README is the Python package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
 
 ## Install
 
@@ -27,7 +27,7 @@ status = client.text_to_image.get(task.id)
 remix = client.remix_image.create(
     model="flux-2-pro-remix-image",
     prompt="Turn this product shot into a warm editorial photo",
-    source_image_urls=["https://example.com/source.jpg"],
+    source_image_urls=["https://cdn.runapi.ai/public/samples/image.jpg"],
     aspect_ratio="auto",
 )
 ```
