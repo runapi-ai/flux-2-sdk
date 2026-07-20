@@ -7,7 +7,7 @@ This README is the Ruby package guide inside the public `flux-2-sdk` repository.
 ## Install
 
 ```bash
-gem install runapi-flux_2
+gem install runapi-flux-2
 ```
 
 ## Quick start

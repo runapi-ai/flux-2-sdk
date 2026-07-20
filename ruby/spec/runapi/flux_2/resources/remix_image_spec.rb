@@ -35,7 +35,7 @@ RSpec.describe RunApi::Flux2::Resources::RemixImage do
 
     it "raises ValidationError when source_image_urls is empty" do
       expect { remix_image.create(model: "flux-2-pro-remix-image", prompt: "test", source_image_urls: []) }
-        .to raise_error(RunApi::Core::ValidationError, /source_image_urls is required/)
+        .to raise_error(RunApi::Core::ValidationError, /source_image_urls must contain between 1 and 8 items/)
     end
   end
 

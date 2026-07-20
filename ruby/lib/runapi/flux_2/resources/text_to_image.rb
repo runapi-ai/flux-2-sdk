@@ -21,27 +21,27 @@ module RunApi
         #
         # @param params [Hash] text-to-image parameters
         # @return [RunApi::Flux2::Types::CompletedTextToImageResponse] completed text-to-image result
-        def run(**params)
-          task = create(**params)
-          poll_until_complete { get(task.id) }
+        def run(options: nil, **params)
+          task = create(options: options, **params)
+          poll_until_complete { get(task.id, options: options) }
         end
 
         # Create a text-to-image task.
         #
         # @param params [Hash] text-to-image parameters
         # @return [RunApi::Flux2::Types::TextToImageResponse] task creation result with id
-        def create(**params)
+        def create(options: nil, **params)
           params = compact_params(params)
           validate_contract!(CONTRACT["text-to-image"], params)
-          request(:post, ENDPOINT, body: params)
+          request(:post, ENDPOINT, body: params, options: options)
         end
 
         # Get text-to-image status by task ID.
         #
         # @param id [String] task ID
         # @return [RunApi::Flux2::Types::TextToImageResponse] current text-to-image status
-        def get(id)
-          request(:get, "#{ENDPOINT}/#{id}")
+        def get(id, options: nil)
+          request(:get, "#{ENDPOINT}/#{id}", options: options)
         end
       end
     end

@@ -13,7 +13,9 @@ CONTRACT = {
                     "required": True
                 },
                 "source_image_urls": {
-                    "required": True
+                    "required": True,
+                    "min_items": 1,
+                    "max_items": 8
                 }
             },
             "flux-2-pro-remix-image": {
@@ -27,7 +29,9 @@ CONTRACT = {
                     "required": True
                 },
                 "source_image_urls": {
-                    "required": True
+                    "required": True,
+                    "min_items": 1,
+                    "max_items": 8
                 }
             }
         }
