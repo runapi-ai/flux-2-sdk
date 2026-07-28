@@ -4,7 +4,7 @@
 
 The Flux 2 Java SDK is the language-specific package for Flux 2 on RunAPI. Use it when your Java application needs typed builders, strict request validation, task status lookup, local polling helpers, file uploads, account helpers, and consistent RunAPI errors for Flux 2 workflows.
 
-This README is the Java package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
+This README is the Java package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs/api/flux-2/text-to-image; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
 ## Requirements
 
@@ -181,8 +181,8 @@ try {
 ## Links
 
 - Model page: https://runapi.ai/models/flux-2
-- SDK docs: https://runapi.ai/docs#sdk-flux-2
-- Product docs: https://runapi.ai/docs#flux-2
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/flux-2/text-to-image
 - Pricing and rate limits: https://runapi.ai/models/flux-2/pro-text-to-image
 - Full catalog: https://runapi.ai/models
 - Repository: https://github.com/runapi-ai/flux-2-sdk

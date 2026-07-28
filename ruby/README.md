@@ -2,7 +2,7 @@
 
 The Flux 2 Ruby SDK is the language-specific package for Flux 2 on RunAPI. Use this package for image generation, image editing, and creative production workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Ruby.
 
-This README is the Ruby package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs#flux-2; for SDK docs, use https://runapi.ai/docs#sdk-flux-2.
+This README is the Ruby package guide inside the public `flux-2-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/flux-2; for API reference, use https://runapi.ai/docs/api/flux-2/text-to-image; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
 ## Install
 
@@ -47,8 +47,8 @@ Use Ruby keyword arguments and the `RunApi::Flux2` error classes when building i
 ## Links
 
 - Model page: https://runapi.ai/models/flux-2
-- SDK docs: https://runapi.ai/docs#sdk-flux-2
-- Product docs: https://runapi.ai/docs#flux-2
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/flux-2/text-to-image
 - Pricing and rate limits: https://runapi.ai/models/flux-2/pro-text-to-image
 - Provider comparison: https://runapi.ai/providers/black-forest-labs
 - Full catalog: https://runapi.ai/models
