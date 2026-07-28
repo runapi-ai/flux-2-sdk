@@ -1,33 +1,39 @@
 package flux2
 
+import "github.com/runapi-ai/core-sdk/go/core"
+
 // TaskStatus represents the lifecycle state of an async task (e.g. "pending", "processing", "completed", "failed").
 type TaskStatus string
 
 // TextToImageParams holds the request parameters for generating an image from a text prompt.
+// Flux 2 Max requires a concrete AspectRatio, supports only 1k output, and produces one image.
 type TextToImageParams struct {
 	Model               string `json:"model" help:"required; model slug"`
 	Prompt              string `json:"prompt" help:"required; 3-5000 chars"`
-	AspectRatio         string `json:"aspect_ratio,omitempty" help:"optional; output aspect ratio; Default: 1:1"`
-	OutputResolution    string `json:"output_resolution,omitempty" help:"optional; output resolution; Default: 1k"`
-	EnableSafetyChecker *bool  `json:"enable_safety_checker,omitempty" help:"optional; content safety check toggle"`
+	AspectRatio         string `json:"aspect_ratio,omitempty" help:"optional except Flux 2 Max; output aspect ratio; Default: 1:1"`
+	OutputResolution    string `json:"output_resolution,omitempty" help:"optional; output resolution; Flux 2 Max supports only 1k; Default: 1k"`
+	OutputCount         int    `json:"output_count,omitempty" help:"optional; Flux 2 Max supports only 1"`
+	EnableSafetyChecker *bool  `json:"enable_safety_checker,omitempty" help:"optional except Flux 2 Max; content safety check toggle"`
 	CallbackURL         string `json:"callback_url,omitempty" help:"optional; webhook URL"`
 }
 
 // RemixImageParams holds the request parameters for creating prompt-guided variations
-// from 1-8 source images. Setting AspectRatio to "auto" preserves the source image ratio.
+// from 1-8 source images. Flux 2 Max requires exactly one HTTP(S) source image and a concrete aspect ratio.
 type RemixImageParams struct {
 	Model               string   `json:"model" help:"required; model slug"`
 	Prompt              string   `json:"prompt" help:"required; 3-5000 chars"`
 	SourceImageURLs     []string `json:"source_image_urls" help:"required; 1-8 source image URLs"`
-	AspectRatio         string   `json:"aspect_ratio,omitempty" help:"optional; output aspect ratio; auto preserves source image ratio"`
-	OutputResolution    string   `json:"output_resolution,omitempty" help:"optional; output resolution; Default: 1k"`
-	EnableSafetyChecker *bool    `json:"enable_safety_checker,omitempty" help:"optional; content safety check toggle"`
+	AspectRatio         string   `json:"aspect_ratio,omitempty" help:"optional except Flux 2 Max; output aspect ratio; auto preserves the source image ratio"`
+	OutputResolution    string   `json:"output_resolution,omitempty" help:"optional; output resolution; Flux 2 Max supports only 1k; Default: 1k"`
+	OutputCount         int      `json:"output_count,omitempty" help:"optional; Flux 2 Max supports only 1"`
+	EnableSafetyChecker *bool    `json:"enable_safety_checker,omitempty" help:"optional except Flux 2 Max; content safety check toggle"`
 	CallbackURL         string   `json:"callback_url,omitempty" help:"optional; webhook URL"`
 }
 
 // AsyncTaskResponse is the base response for an asynchronous generation task.
 // It implements core.TaskResponse so it can be used with the polling helpers.
 type AsyncTaskResponse struct {
+	core.TaskBillingFacts
 	ID     string     `json:"id"`
 	Status TaskStatus `json:"status"`
 	Error  string     `json:"error,omitempty"`

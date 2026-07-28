@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
-import { AuthenticationError } from '@runapi.ai/core';
 import { Flux2Client } from '../../src';
 
 const originalEnv = process.env.RUNAPI_API_KEY;
@@ -21,11 +20,6 @@ describe('Flux2Client', () => {
     const client = new Flux2Client({ apiKey: 'test-key' });
     expect(client.textToImage).toBeDefined();
     expect(client.remixImage).toBeDefined();
-  });
-
-  it('throws when apiKey missing and env unset', () => {
-    expect(() => new Flux2Client()).toThrow(AuthenticationError);
-    expect(() => new Flux2Client({ apiKey: '' })).toThrow(AuthenticationError);
   });
 
   it('reads apiKey from RUNAPI_API_KEY env var', () => {

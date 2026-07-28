@@ -85,3 +85,5 @@ RunAPI-generated file URLs are temporary. Download and store generated images, v
 - [Flux 2 Pro remix image](https://runapi.ai/models/flux-2/pro-remix-image.md)
 - [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image.md)
 - [Flux 2 Flex remix image](https://runapi.ai/models/flux-2/flex-remix-image.md)
+- [Flux 2 Max text to image](https://runapi.ai/models/flux-2/max-text-to-image.md)
+- [Flux 2 Max remix image](https://runapi.ai/models/flux-2/max-remix-image.md)

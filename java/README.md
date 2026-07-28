@@ -16,7 +16,7 @@ Gradle:
 
 ```kotlin
 dependencies {
-  implementation("ai.runapi:runapi-flux-2:0.1.1")
+  implementation("ai.runapi:runapi-flux-2:0.2.0")
 }
 ```
 
@@ -26,7 +26,7 @@ Maven:
 <dependency>
   <groupId>ai.runapi</groupId>
   <artifactId>runapi-flux-2</artifactId>
-  <version>0.1.1</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@ Use the BOM when multiple RunAPI Java modules are installed:
 
 ```kotlin
 dependencies {
-  implementation(platform("ai.runapi:runapi-bom:0.2.6"))
+  implementation(platform("ai.runapi:runapi-bom:0.2.7"))
   implementation("ai.runapi:runapi-flux-2")
 }
 ```
@@ -47,7 +47,7 @@ Maven BOM:
     <dependency>
       <groupId>ai.runapi</groupId>
       <artifactId>runapi-bom</artifactId>
-      <version>0.2.6</version>
+      <version>0.2.7</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -136,6 +136,10 @@ FileUploadResponse fromBase64 = client.files().create(
         .build()
 );
 ```
+
+## Flux 2 Max
+
+Use `flux-2-max-text-to-image` or `flux-2-max-remix-image` for the highest-quality tier. Max requires a concrete `aspectRatio`, supports `outputResolution("1k")` and `outputCount(1)` only, and accepts exactly one public HTTP(S) source image for remix.
 
 RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
 

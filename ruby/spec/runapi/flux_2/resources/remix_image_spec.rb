@@ -28,6 +28,19 @@ RSpec.describe RunApi::Flux2::Resources::RemixImage do
       expect(result.id).to eq("task-4")
     end
 
+    it "accepts Flux 2 Max with one concrete source image" do
+      params = {
+        model: "flux-2-max-remix-image", prompt: "refine the product image",
+        source_image_urls: ["https://cdn.runapi.ai/public/samples/image.jpg"], aspect_ratio: "3:4",
+        output_resolution: "1k", output_count: 1
+      }
+      expect(http).to receive(:request).with(:post, endpoint, body: params)
+        .and_return("id" => "task-max-remix")
+
+      result = remix_image.create(**params)
+      expect(result.id).to eq("task-max-remix")
+    end
+
     it "raises ValidationError when source_image_urls is missing" do
       expect { remix_image.create(model: "flux-2-pro-remix-image", prompt: "test") }
         .to raise_error(RunApi::Core::ValidationError, /source_image_urls is required/)

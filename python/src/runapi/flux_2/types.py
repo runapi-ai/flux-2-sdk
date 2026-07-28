@@ -1,4 +1,4 @@
-"""Flux 2 model lists, enums, and response models."""
+"""Flux 2 model lists, request constraints, enums, and response models."""
 
 from __future__ import annotations
 

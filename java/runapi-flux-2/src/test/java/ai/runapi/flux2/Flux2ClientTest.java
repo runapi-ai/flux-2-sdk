@@ -64,6 +64,27 @@ class Flux2ClientTest {
   }
 
   @Test
+  void maxModelUsesItsTypedSlugAndConstrainedFields() throws Exception {
+    CapturingTransport transport = new CapturingTransport("{\"id\":\"task_max\",\"status\":\"processing\"}");
+    Flux2Client client = Flux2Client.builder().apiKey("sk-test").transport(transport).build();
+
+    client.textToImage().create(
+        TextToImageParams.builder()
+            .model(TextToImageModel.FLUX_2_MAX_TEXT_TO_IMAGE)
+            .prompt("A precise studio product photograph")
+            .aspectRatio("4:3")
+            .outputResolution("1k")
+            .outputCount(1)
+            .build()
+    );
+
+    JsonNode body = bodyJson(transport.request);
+    assertEquals("flux-2-max-text-to-image", body.get("model").asText());
+    assertEquals("4:3", body.get("aspect_ratio").asText());
+    assertEquals(1, body.get("output_count").asInt());
+  }
+
+  @Test
   void getDecodesTaskResponseAndExtraFields() {
     CapturingTransport transport = new CapturingTransport("{\"id\":\"task_456\",\"status\":\"completed\",\"images\":[{\"url\":\"https://file.runapi.ai/generated\"}],\"custom\":\"kept\"}");
     Flux2Client client = Flux2Client.builder().apiKey("sk-test").transport(transport).build();

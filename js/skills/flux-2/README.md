@@ -21,7 +21,7 @@
 </div>
 <br/>
 
-Generate and remix images with Flux 2 Pro and Flex. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Flux 2 through RunAPI.
+Generate and remix images with Flux 2 Pro, Flex, and Max. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Flux 2 through RunAPI.
 
 The canonical agent file is `skills/flux-2/SKILL.md`.
 
@@ -80,6 +80,8 @@ const remix = await client.remixImage.run({
 - [Flux 2 Pro remix image](https://runapi.ai/models/flux-2/pro-remix-image)
 - [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image)
 - [Flux 2 Flex remix image](https://runapi.ai/models/flux-2/flex-remix-image)
+- [Flux 2 Max text to image](https://runapi.ai/models/flux-2/max-text-to-image)
+- [Flux 2 Max remix image](https://runapi.ai/models/flux-2/max-remix-image)
 
 ## Agent rules
 

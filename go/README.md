@@ -37,6 +37,10 @@ remix, err := client.RemixImage.Create(context.Background(), flux2.RemixImagePar
 
 Use `create` when you want to submit a task and return quickly, `get` when you need the latest task state, and `run` when a script should create and poll until completion. In web request handlers, prefer `create` plus webhook or later `get` polling so a worker is not held open.
 
+## Flux 2 Max
+
+Use `flux-2-max-text-to-image` or `flux-2-max-remix-image` for the highest-quality tier. Max requires a concrete `AspectRatio`, supports `OutputResolution: "1k"` and `OutputCount: 1` only, and accepts exactly one public HTTP(S) source image for remix.
+
 RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
 
 ## Language notes

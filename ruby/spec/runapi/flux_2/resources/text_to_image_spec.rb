@@ -31,6 +31,23 @@ RSpec.describe RunApi::Flux2::Resources::TextToImage do
         expect(result["id"]).to eq("task-2")
       end
 
+      it "accepts Flux 2 Max with its constrained request fields" do
+        params = {
+          model: "flux-2-max-text-to-image", prompt: "a detailed product image", aspect_ratio: "4:3",
+          output_resolution: "1k", output_count: 1
+        }
+        expect(http).to receive(:request).with(:post, endpoint, body: params)
+          .and_return("id" => "task-max")
+
+        result = text_to_image.create(**params)
+        expect(result.id).to eq("task-max")
+      end
+
+      it "requires aspect_ratio for Flux 2 Max" do
+        expect { text_to_image.create(model: "flux-2-max-text-to-image", prompt: "a detailed product image") }
+          .to raise_error(RunApi::Core::ValidationError, /aspect_ratio is required/)
+      end
+
       it "raises ValidationError for invalid aspect_ratio on T2I model" do
         expect { text_to_image.create(model: "flux-2-pro-text-to-image", prompt: "test", aspect_ratio: "auto") }
           .to raise_error(RunApi::Core::ValidationError, /aspect_ratio must be one of/)

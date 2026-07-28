@@ -3,6 +3,7 @@ package flux2
 import (
 	"context"
 	"encoding/json"
+	"strings"
 	"testing"
 
 	"github.com/runapi-ai/core-sdk/go/core"
@@ -63,6 +64,45 @@ func TestTextToImageCreate(t *testing.T) {
 	}
 }
 
+func TestTextToImageCreateRejectsSafetyCheckerForFlux2Max(t *testing.T) {
+	client := NewClientWithHTTP(&stubHTTPClient{})
+	safetyChecker := true
+
+	_, err := client.TextToImage.Create(context.Background(), TextToImageParams{
+		Model:               "flux-2-max-text-to-image",
+		Prompt:              "A careful Max contract test",
+		AspectRatio:         "1:1",
+		OutputResolution:    "1k",
+		OutputCount:         1,
+		EnableSafetyChecker: &safetyChecker,
+	})
+	if err == nil || !strings.Contains(err.Error(), "enable_safety_checker is not allowed when model is flux-2-max-text-to-image") {
+		t.Fatalf("expected Flux 2 Max safety checker validation error, got %v", err)
+	}
+}
+
+func TestTextToImageCreateMax(t *testing.T) {
+	stub := &stubHTTPClient{
+		response: json.RawMessage(`{"id":"task_max","status":"processing"}`),
+	}
+	client := NewClientWithHTTP(stub)
+	_, err := client.TextToImage.Create(context.Background(), TextToImageParams{
+		Prompt:           "a precise studio product photograph",
+		Model:            "flux-2-max-text-to-image",
+		AspectRatio:      "4:3",
+		OutputResolution: "1k",
+		OutputCount:      1,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	body := stub.body.(map[string]any)
+	outputCount, ok := body["output_count"].(float64)
+	if body["model"] != "flux-2-max-text-to-image" || body["aspect_ratio"] != "4:3" || !ok || outputCount != 1 {
+		t.Fatalf("unexpected Max request body: %#v", body)
+	}
+}
+
 func TestTextToImageGet(t *testing.T) {
 	stub := &stubHTTPClient{
 		response: json.RawMessage(`{"id":"task_456","status":"completed","images":[{"url":"https://cdn.runapi.ai/public/samples/result.jpg"}]}`),
@@ -116,5 +156,28 @@ func TestRemixImageCreate(t *testing.T) {
 	}
 	if resp.ID != "task_789" {
 		t.Fatalf("unexpected task ID: %v", resp.ID)
+	}
+}
+
+func TestRemixImageCreateMax(t *testing.T) {
+	stub := &stubHTTPClient{
+		response: json.RawMessage(`{"id":"task_max_remix","status":"processing"}`),
+	}
+	client := NewClientWithHTTP(stub)
+	_, err := client.RemixImage.Create(context.Background(), RemixImageParams{
+		Prompt:           "refine the source product image",
+		Model:            "flux-2-max-remix-image",
+		SourceImageURLs:  []string{"https://cdn.runapi.ai/public/samples/image.jpg"},
+		AspectRatio:      "3:4",
+		OutputResolution: "1k",
+		OutputCount:      1,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	body := stub.body.(map[string]any)
+	outputCount, ok := body["output_count"].(float64)
+	if body["model"] != "flux-2-max-remix-image" || body["aspect_ratio"] != "3:4" || !ok || outputCount != 1 {
+		t.Fatalf("unexpected Max remix request body: %#v", body)
 	}
 }

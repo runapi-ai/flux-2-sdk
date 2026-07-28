@@ -10,6 +10,7 @@ public final class TextToImageParams {
   private final String prompt;
   private final String aspectRatio;
   private final String outputResolution;
+  private final Integer outputCount;
   private final Boolean enableSafetyChecker;
   private final String callbackUrl;
 
@@ -18,6 +19,7 @@ public final class TextToImageParams {
     this.prompt = Flux2ParamUtils.requireNonBlank(builder.prompt, "prompt");
     this.aspectRatio = builder.aspectRatio;
     this.outputResolution = builder.outputResolution;
+    this.outputCount = builder.outputCount;
     this.enableSafetyChecker = builder.enableSafetyChecker;
     this.callbackUrl = builder.callbackUrl;
   }
@@ -39,6 +41,7 @@ public final class TextToImageParams {
     raw.put("prompt", Flux2ParamUtils.wireValue(prompt));
     raw.put("aspect_ratio", Flux2ParamUtils.wireValue(aspectRatio));
     raw.put("output_resolution", Flux2ParamUtils.wireValue(outputResolution));
+    raw.put("output_count", Flux2ParamUtils.wireValue(outputCount));
     raw.put("enable_safety_checker", Flux2ParamUtils.wireValue(enableSafetyChecker));
     raw.put("callback_url", Flux2ParamUtils.wireValue(callbackUrl));
     return Flux2ParamUtils.compact(raw);
@@ -52,6 +55,7 @@ public final class TextToImageParams {
     private String prompt;
     private String aspectRatio;
     private String outputResolution;
+    private Integer outputCount;
     private Boolean enableSafetyChecker;
     private String callbackUrl;
 
@@ -85,6 +89,12 @@ public final class TextToImageParams {
     /** Sets the output resolution. */
     public Builder outputResolution(String value) {
       this.outputResolution = Flux2ParamUtils.requireNonBlank(value, "outputResolution");
+      return this;
+    }
+
+    /** Sets the output count. Flux 2 Max supports only one output. */
+    public Builder outputCount(int value) {
+      this.outputCount = value;
       return this;
     }
 

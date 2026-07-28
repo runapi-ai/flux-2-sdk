@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public final class TextToImageModel extends Flux2Value {
   /** flux-2-flex-text-to-image model slug. */
   public static final TextToImageModel FLUX_2_FLEX_TEXT_TO_IMAGE = new TextToImageModel("flux-2-flex-text-to-image");
+  /** flux-2-max-text-to-image model slug. */
+  public static final TextToImageModel FLUX_2_MAX_TEXT_TO_IMAGE = new TextToImageModel("flux-2-max-text-to-image");
   /** flux-2-pro-text-to-image model slug. */
   public static final TextToImageModel FLUX_2_PRO_TEXT_TO_IMAGE = new TextToImageModel("flux-2-pro-text-to-image");
 

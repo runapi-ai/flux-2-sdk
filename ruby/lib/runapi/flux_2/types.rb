@@ -3,7 +3,8 @@
 module RunApi
   module Flux2
     # Type definitions for Flux 2.
-    # Each operation has pro (higher fidelity) and flex (faster, lower cost) tiers.
+    # Each operation has Pro, Flex, and Max tiers. Max requires a concrete
+    # aspect ratio, supports 1k output only, and produces one image.
     module Types
       # A single generated image with its CDN URL.
       class Image < RunApi::Core::BaseModel

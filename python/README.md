@@ -44,6 +44,10 @@ print(result.images[0].url)
 
 In web request handlers, prefer `create` plus webhook or later `get` polling so a worker is not held open.
 
+## Flux 2 Max
+
+Use `flux-2-max-text-to-image` or `flux-2-max-remix-image` for the highest-quality tier. Max requires a concrete `aspect_ratio`, supports `output_resolution="1k"` and `output_count=1` only, and accepts exactly one public HTTP(S) source image for remix.
+
 RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
 
 ## Language notes

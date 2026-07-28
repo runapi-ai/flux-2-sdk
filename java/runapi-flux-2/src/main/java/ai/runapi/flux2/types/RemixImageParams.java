@@ -11,6 +11,7 @@ public final class RemixImageParams {
   private final List<String> sourceImageUrls;
   private final String aspectRatio;
   private final String outputResolution;
+  private final Integer outputCount;
   private final Boolean enableSafetyChecker;
   private final String callbackUrl;
 
@@ -20,6 +21,7 @@ public final class RemixImageParams {
     this.sourceImageUrls = Flux2ParamUtils.requiredStrings(builder.sourceImageUrls, "sourceImageUrls");
     this.aspectRatio = builder.aspectRatio;
     this.outputResolution = builder.outputResolution;
+    this.outputCount = builder.outputCount;
     this.enableSafetyChecker = builder.enableSafetyChecker;
     this.callbackUrl = builder.callbackUrl;
   }
@@ -42,6 +44,7 @@ public final class RemixImageParams {
     raw.put("source_image_urls", Flux2ParamUtils.wireValue(sourceImageUrls));
     raw.put("aspect_ratio", Flux2ParamUtils.wireValue(aspectRatio));
     raw.put("output_resolution", Flux2ParamUtils.wireValue(outputResolution));
+    raw.put("output_count", Flux2ParamUtils.wireValue(outputCount));
     raw.put("enable_safety_checker", Flux2ParamUtils.wireValue(enableSafetyChecker));
     raw.put("callback_url", Flux2ParamUtils.wireValue(callbackUrl));
     return Flux2ParamUtils.compact(raw);
@@ -56,6 +59,7 @@ public final class RemixImageParams {
     private List<String> sourceImageUrls;
     private String aspectRatio;
     private String outputResolution;
+    private Integer outputCount;
     private Boolean enableSafetyChecker;
     private String callbackUrl;
 
@@ -95,6 +99,12 @@ public final class RemixImageParams {
     /** Sets the output resolution. */
     public Builder outputResolution(String value) {
       this.outputResolution = Flux2ParamUtils.requireNonBlank(value, "outputResolution");
+      return this;
+    }
+
+    /** Sets the output count. Flux 2 Max supports only one output. */
+    public Builder outputCount(int value) {
+      this.outputCount = value;
       return this;
     }
 

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public final class RemixImageModel extends Flux2Value {
   /** flux-2-flex-remix-image model slug. */
   public static final RemixImageModel FLUX_2_FLEX_REMIX_IMAGE = new RemixImageModel("flux-2-flex-remix-image");
+  /** flux-2-max-remix-image model slug. */
+  public static final RemixImageModel FLUX_2_MAX_REMIX_IMAGE = new RemixImageModel("flux-2-max-remix-image");
   /** flux-2-pro-remix-image model slug. */
   public static final RemixImageModel FLUX_2_PRO_REMIX_IMAGE = new RemixImageModel("flux-2-pro-remix-image");
 

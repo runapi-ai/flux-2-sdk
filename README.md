@@ -39,7 +39,7 @@ Gradle:
 
 ```kotlin
 dependencies {
-  implementation("ai.runapi:runapi-flux-2:0.1.1")
+  implementation("ai.runapi:runapi-flux-2:0.2.0")
 }
 ```
 
@@ -49,7 +49,7 @@ Maven:
 <dependency>
   <groupId>ai.runapi</groupId>
   <artifactId>runapi-flux-2</artifactId>
-  <version>0.1.1</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
@@ -57,7 +57,7 @@ Use the Java BOM when installing multiple RunAPI Java modules:
 
 ```kotlin
 dependencies {
-  implementation(platform("ai.runapi:runapi-bom:0.2.6"))
+  implementation(platform("ai.runapi:runapi-bom:0.2.7"))
   implementation("ai.runapi:runapi-flux-2")
 }
 ```
@@ -126,6 +126,8 @@ Use the most specific Flux 2 variant page for pricing, rate limits, and commerci
 - [Flux 2 Pro remix image](https://runapi.ai/models/flux-2/pro-remix-image)
 - [Flux 2 Flex text to image](https://runapi.ai/models/flux-2/flex-text-to-image)
 - [Flux 2 Flex remix image](https://runapi.ai/models/flux-2/flex-remix-image)
+- [Flux 2 Max text to image](https://runapi.ai/models/flux-2/max-text-to-image)
+- [Flux 2 Max remix image](https://runapi.ai/models/flux-2/max-remix-image)
 
 Default pricing link for the Flux 2 SDK: https://runapi.ai/models/flux-2/pro-text-to-image
 

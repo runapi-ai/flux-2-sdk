@@ -93,6 +93,34 @@ describe('TextToImage', () => {
       );
     });
 
+    it('should send the constrained Max text-to-image request', async () => {
+      const mockResponse: TaskCreateResponse = { id: 'task-max' };
+      vi.mocked(mockHttp.request).mockResolvedValueOnce(mockResponse);
+
+      const textToImage = new TextToImage(mockHttp);
+      await textToImage.create({
+        model: 'flux-2-max-text-to-image',
+        prompt: 'A precise studio product photograph',
+        aspect_ratio: '4:3',
+        output_resolution: '1k',
+        output_count: 1,
+      });
+
+      expect(mockHttp.request).toHaveBeenCalledWith(
+        'POST',
+        '/api/v1/flux_2/text_to_image',
+        {
+          body: {
+            model: 'flux-2-max-text-to-image',
+            prompt: 'A precise studio product photograph',
+            aspect_ratio: '4:3',
+            output_resolution: '1k',
+            output_count: 1,
+          },
+        }
+      );
+    });
+
   });
 
   describe('get', () => {
