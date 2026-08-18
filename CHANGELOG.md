@@ -1,5 +1,11 @@
 # Changelog
 
+## [ruby/v0.3.1](https://github.com/runapi-ai/flux-2-sdk/releases/tag/ruby%2Fv0.3.1) - 2026-08-18
+
+### Changed
+- Allow Ruby clients to install the core SDK release that adds persistent Files and multipart Uploads alongside this model SDK.
+
+
 ## [python/v0.3.1](https://github.com/runapi-ai/flux-2-sdk/releases/tag/python%2Fv0.3.1) - 2026-07-29
 
 ### Fixed
