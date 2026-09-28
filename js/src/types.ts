@@ -1,4 +1,4 @@
-import type { AsyncTaskStatus, TaskBillingResponse, TaskResponse } from '@runapi.ai/core';
+import type { AsyncTaskStatus, TaskResponse } from '@runapi.ai/core';
 
 /**
  * All Flux 2 model slugs. Pro and Flex offer their standard request shapes;
@@ -97,7 +97,7 @@ export type RemixImageParams = ProFlexRemixImageParams | MaxRemixImageParams;
 export type TextToImageParams = GenerationT2IParams;
 
 /** Acknowledged task with its server-assigned ID. */
-export interface TaskCreateResponse extends TaskBillingResponse {
+export interface TaskCreateResponse {
   id: string;
 }
 

@@ -27,16 +27,14 @@ func (s *stubHTTPClient) Request(_ context.Context, method, path string, opts *c
 
 func TestTextToImageCreate(t *testing.T) {
 	stub := &stubHTTPClient{
-		response: json.RawMessage(`{"id":"task_123","status":"processing"}`),
-	}
+		response: json.RawMessage(`{"id":"task_123","status":"processing"}`)}
 	client := NewClientWithHTTP(stub)
 	enableSafetyChecker := true
 	resp, err := client.TextToImage.Create(context.Background(), TextToImageParams{
 		Prompt:              "a beautiful landscape",
 		Model:               "flux-2-pro-text-to-image",
 		OutputResolution:    "2k",
-		EnableSafetyChecker: &enableSafetyChecker,
-	})
+		EnableSafetyChecker: &enableSafetyChecker})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -74,8 +72,7 @@ func TestTextToImageCreateRejectsSafetyCheckerForFlux2Max(t *testing.T) {
 		AspectRatio:         "1:1",
 		OutputResolution:    "1k",
 		OutputCount:         1,
-		EnableSafetyChecker: &safetyChecker,
-	})
+		EnableSafetyChecker: &safetyChecker})
 	if err == nil || !strings.Contains(err.Error(), "enable_safety_checker is not allowed when model is flux-2-max-text-to-image") {
 		t.Fatalf("expected Flux 2 Max safety checker validation error, got %v", err)
 	}
@@ -83,16 +80,14 @@ func TestTextToImageCreateRejectsSafetyCheckerForFlux2Max(t *testing.T) {
 
 func TestTextToImageCreateMax(t *testing.T) {
 	stub := &stubHTTPClient{
-		response: json.RawMessage(`{"id":"task_max","status":"processing"}`),
-	}
+		response: json.RawMessage(`{"id":"task_max","status":"processing"}`)}
 	client := NewClientWithHTTP(stub)
 	_, err := client.TextToImage.Create(context.Background(), TextToImageParams{
 		Prompt:           "a precise studio product photograph",
 		Model:            "flux-2-max-text-to-image",
 		AspectRatio:      "4:3",
 		OutputResolution: "1k",
-		OutputCount:      1,
-	})
+		OutputCount:      1})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -105,8 +100,7 @@ func TestTextToImageCreateMax(t *testing.T) {
 
 func TestTextToImageGet(t *testing.T) {
 	stub := &stubHTTPClient{
-		response: json.RawMessage(`{"id":"task_456","status":"completed","images":[{"url":"https://cdn.runapi.ai/public/samples/result.jpg"}]}`),
-	}
+		response: json.RawMessage(`{"id":"task_456","status":"completed", "usage": {"cost": 0.05},"images":[{"url":"https://cdn.runapi.ai/public/samples/result.jpg"}]}`)}
 	client := NewClientWithHTTP(stub)
 	resp, err := client.TextToImage.Get(context.Background(), "task_abc")
 	if err != nil {
@@ -128,15 +122,13 @@ func TestTextToImageGet(t *testing.T) {
 
 func TestRemixImageCreate(t *testing.T) {
 	stub := &stubHTTPClient{
-		response: json.RawMessage(`{"id":"task_789","status":"processing"}`),
-	}
+		response: json.RawMessage(`{"id":"task_789","status":"processing"}`)}
 	client := NewClientWithHTTP(stub)
 	resp, err := client.RemixImage.Create(context.Background(), RemixImageParams{
 		Prompt:          "make it cinematic",
 		Model:           "flux-2-pro-remix-image",
 		SourceImageURLs: []string{"https://cdn.runapi.ai/public/samples/source.jpg"},
-		AspectRatio:     "auto",
-	})
+		AspectRatio:     "auto"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -161,8 +153,7 @@ func TestRemixImageCreate(t *testing.T) {
 
 func TestRemixImageCreateMax(t *testing.T) {
 	stub := &stubHTTPClient{
-		response: json.RawMessage(`{"id":"task_max_remix","status":"processing"}`),
-	}
+		response: json.RawMessage(`{"id":"task_max_remix","status":"processing"}`)}
 	client := NewClientWithHTTP(stub)
 	_, err := client.RemixImage.Create(context.Background(), RemixImageParams{
 		Prompt:           "refine the source product image",
@@ -170,8 +161,7 @@ func TestRemixImageCreateMax(t *testing.T) {
 		SourceImageURLs:  []string{"https://cdn.runapi.ai/public/samples/image.jpg"},
 		AspectRatio:      "3:4",
 		OutputResolution: "1k",
-		OutputCount:      1,
-	})
+		OutputCount:      1})
 	if err != nil {
 		t.Fatal(err)
 	}

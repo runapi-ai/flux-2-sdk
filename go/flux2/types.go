@@ -33,7 +33,7 @@ type RemixImageParams struct {
 // AsyncTaskResponse is the base response for an asynchronous generation task.
 // It implements core.TaskResponse so it can be used with the polling helpers.
 type AsyncTaskResponse struct {
-	core.TaskBillingFacts
+	Usage *core.TaskUsage `json:"usage,omitempty"`
 	ID     string     `json:"id"`
 	Status TaskStatus `json:"status"`
 	Error  string     `json:"error,omitempty"`
