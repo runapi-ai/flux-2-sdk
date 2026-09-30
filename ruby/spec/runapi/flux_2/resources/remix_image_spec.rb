@@ -40,16 +40,6 @@ RSpec.describe RunApi::Flux2::Resources::RemixImage do
       result = remix_image.create(**params)
       expect(result.id).to eq("task-max-remix")
     end
-
-    it "raises ValidationError when source_image_urls is missing" do
-      expect { remix_image.create(model: "flux-2-pro-remix-image", prompt: "test") }
-        .to raise_error(RunApi::Core::ValidationError, /source_image_urls is required/)
-    end
-
-    it "raises ValidationError when source_image_urls is empty" do
-      expect { remix_image.create(model: "flux-2-pro-remix-image", prompt: "test", source_image_urls: []) }
-        .to raise_error(RunApi::Core::ValidationError, /source_image_urls must contain between 1 and 8 items/)
-    end
   end
 
   describe "#get" do

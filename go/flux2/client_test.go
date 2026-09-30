@@ -3,7 +3,6 @@ package flux2
 import (
 	"context"
 	"encoding/json"
-	"strings"
 	"testing"
 
 	"github.com/runapi-ai/core-sdk/go/core"
@@ -59,22 +58,6 @@ func TestTextToImageCreate(t *testing.T) {
 	}
 	if resp.ID != "task_123" {
 		t.Fatalf("unexpected task ID: %v", resp.ID)
-	}
-}
-
-func TestTextToImageCreateRejectsSafetyCheckerForFlux2Max(t *testing.T) {
-	client := NewClientWithHTTP(&stubHTTPClient{})
-	safetyChecker := true
-
-	_, err := client.TextToImage.Create(context.Background(), TextToImageParams{
-		Model:               "flux-2-max-text-to-image",
-		Prompt:              "A careful Max contract test",
-		AspectRatio:         "1:1",
-		OutputResolution:    "1k",
-		OutputCount:         1,
-		EnableSafetyChecker: &safetyChecker})
-	if err == nil || !strings.Contains(err.Error(), "enable_safety_checker is not allowed when model is flux-2-max-text-to-image") {
-		t.Fatalf("expected Flux 2 Max safety checker validation error, got %v", err)
 	}
 }
 

@@ -1,7 +1,7 @@
 import pytest
 
 from runapi.core import config
-from runapi.core.errors import AuthenticationError, ValidationError
+from runapi.core.errors import AuthenticationError
 from runapi.flux_2 import Flux2Client
 from runapi.flux_2.resources.remix_image import RemixImage
 from runapi.flux_2.resources.text_to_image import TextToImage
@@ -105,39 +105,6 @@ def test_run_polls_and_narrows_completed_type():
     assert [call[0] for call in fake.calls] == ["post", "get"]
 
 
-# --- validation -----------------------------------------------------------
-
-
-def test_create_requires_model():
-    client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="model must be one of:"):
-        client.text_to_image.create(prompt="hi")
-
-
-def test_create_requires_prompt():
-    client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="prompt is required"):
-        client.text_to_image.create(model="flux-2-pro-text-to-image")
-
-
-def test_create_rejects_unknown_model():
-    client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="model must be one of:"):
-        client.text_to_image.create(model="not-a-model", prompt="hi")
-
-
-def test_create_rejects_invalid_enum():
-    client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="aspect_ratio must be one of:"):
-        client.text_to_image.create(model="flux-2-pro-text-to-image", prompt="hi", aspect_ratio="99:1")
-
-
-def test_remix_requires_source_image_urls():
-    client = Flux2Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="source_image_urls is required"):
-        client.remix_image.create(model="flux-2-pro-remix-image", prompt="sky")
-
-
 def test_remix_accepts_auto_aspect_ratio():
     fake = FakeHttp({"id": "t1", "status": "pending"})
     client = Flux2Client(api_key="k", http_client=fake)
@@ -174,10 +141,3 @@ def test_max_models_require_their_constrained_request_shapes():
 
     assert fake.calls[0][2]["output_count"] == 1
     assert fake.calls[1][2]["source_image_urls"] == ["https://cdn.runapi.ai/public/samples/image.jpg"]
-
-
-def test_max_text_to_image_requires_a_concrete_aspect_ratio():
-    client = Flux2Client(api_key="k", http_client=FakeHttp())
-
-    with pytest.raises(ValidationError, match="aspect_ratio is required"):
-        client.text_to_image.create(model="flux-2-max-text-to-image", prompt="A precise studio product photograph")

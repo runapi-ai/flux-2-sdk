@@ -42,41 +42,6 @@ RSpec.describe RunApi::Flux2::Resources::TextToImage do
         result = text_to_image.create(**params)
         expect(result.id).to eq("task-max")
       end
-
-      it "requires aspect_ratio for Flux 2 Max" do
-        expect { text_to_image.create(model: "flux-2-max-text-to-image", prompt: "a detailed product image") }
-          .to raise_error(RunApi::Core::ValidationError, /aspect_ratio is required/)
-      end
-
-      it "raises ValidationError for invalid aspect_ratio on T2I model" do
-        expect { text_to_image.create(model: "flux-2-pro-text-to-image", prompt: "test", aspect_ratio: "auto") }
-          .to raise_error(RunApi::Core::ValidationError, /aspect_ratio must be one of/)
-      end
-    end
-
-    it "raises ValidationError when model is missing" do
-      expect { text_to_image.create(prompt: "test") }
-        .to raise_error(RunApi::Core::ValidationError, /model must be one of/)
-    end
-
-    it "raises ValidationError when prompt is missing" do
-      expect { text_to_image.create(model: "flux-2-pro-text-to-image") }
-        .to raise_error(RunApi::Core::ValidationError, /prompt is required/)
-    end
-
-    it "raises ValidationError for invalid model" do
-      expect { text_to_image.create(model: "invalid", prompt: "test") }
-        .to raise_error(RunApi::Core::ValidationError, /model must be one of/)
-    end
-
-    it "raises ValidationError for invalid output_resolution" do
-      expect { text_to_image.create(model: "flux-2-pro-text-to-image", prompt: "test", output_resolution: "4k") }
-        .to raise_error(RunApi::Core::ValidationError, /output_resolution must be one of/)
-    end
-
-    it "raises ValidationError for remix model on text-to-image resource" do
-      expect { text_to_image.create(model: "flux-2-pro-remix-image", prompt: "test", source_image_urls: ["https://cdn.runapi.ai/public/samples/input.png"]) }
-        .to raise_error(RunApi::Core::ValidationError, /model must be one of/)
     end
 
     it "passes valid optional params without error" do

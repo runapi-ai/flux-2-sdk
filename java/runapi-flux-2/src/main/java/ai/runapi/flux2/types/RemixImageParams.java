@@ -17,8 +17,8 @@ public final class RemixImageParams {
 
   private RemixImageParams(Builder builder) {
     this.model = builder.model;
-    this.prompt = Flux2ParamUtils.requireNonBlank(builder.prompt, "prompt");
-    this.sourceImageUrls = Flux2ParamUtils.requiredStrings(builder.sourceImageUrls, "sourceImageUrls");
+    this.prompt = builder.prompt;
+    this.sourceImageUrls = Flux2ParamUtils.strings(builder.sourceImageUrls);
     this.aspectRatio = builder.aspectRatio;
     this.outputResolution = builder.outputResolution;
     this.outputCount = builder.outputCount;
@@ -73,14 +73,14 @@ public final class RemixImageParams {
 
     /** Sets the model slug using a string value. */
     public Builder model(String value) {
-      this.model = Flux2ParamUtils.requireNonBlankTrim(value, "model");
+      this.model = value;
       return this;
     }
 
 
     /** Sets the text prompt. */
     public Builder prompt(String value) {
-      this.prompt = Flux2ParamUtils.requireNonBlank(value, "prompt");
+      this.prompt = value;
       return this;
     }
 
@@ -92,13 +92,13 @@ public final class RemixImageParams {
 
     /** Sets the output aspect ratio. */
     public Builder aspectRatio(String value) {
-      this.aspectRatio = Flux2ParamUtils.requireNonBlank(value, "aspectRatio");
+      this.aspectRatio = value;
       return this;
     }
 
     /** Sets the output resolution. */
     public Builder outputResolution(String value) {
-      this.outputResolution = Flux2ParamUtils.requireNonBlank(value, "outputResolution");
+      this.outputResolution = value;
       return this;
     }
 
@@ -116,7 +116,7 @@ public final class RemixImageParams {
 
     /** Sets the webhook URL for task completion notifications. */
     public Builder callbackUrl(String value) {
-      this.callbackUrl = Flux2ParamUtils.requireNonBlank(value, "callbackUrl");
+      this.callbackUrl = value;
       return this;
     }
 

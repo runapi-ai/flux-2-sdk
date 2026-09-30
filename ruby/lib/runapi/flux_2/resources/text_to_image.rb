@@ -32,7 +32,6 @@ module RunApi
         # @return [RunApi::Flux2::Types::TextToImageResponse] task creation result with id
         def create(options: nil, **params)
           params = compact_params(params)
-          validate_contract!(CONTRACT["text-to-image"], params)
           request(:post, ENDPOINT, body: params, options: options)
         end
 
